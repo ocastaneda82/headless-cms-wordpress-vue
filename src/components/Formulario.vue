@@ -1,38 +1,31 @@
 <template>
   <div>
-    <b-form @submit="onSubmit" &#x3C;!-- @reset="onReset" -->
+    <b-form
+      @submit="onSubmit"
       v-if="show"
       action="https://vuejs.org/"
       method="post"
-      >
-      <b-form-group
-        id="input-group-1"
-        label="Email address:"
-        label-for="input-1"
-        description="We'll never share your email with anyone else."
-      >
+    >
+      <b-form-group id="input-group-4" label="User:" label-for="input-user">
         <b-form-input
-          id="input-1"
-          v-model="form.email"
-          type="email"
+          id="input-user"
+          v-model="form.user"
           required
-          placeholder="Enter email"
+          placeholder="Enter user"
         ></b-form-input>
       </b-form-group>
-
-      <b-form-group id="input-group-2" label="Your Name:" label-for="input-2">
-        <b-form-input id="input-2" v-model="form.name" required placeholder="Enter name"></b-form-input>
-      </b-form-group>
-
-      <b-form-group id="input-group-3" label="Food:" label-for="input-3">
-        <b-form-select id="input-3" v-model="form.food" :options="foods" required></b-form-select>
-      </b-form-group>
-
-      <b-form-group id="input-group-4">
-        <b-form-checkbox-group v-model="form.checked" id="checkboxes-4">
-          <b-form-checkbox value="me">Check me out</b-form-checkbox>
-          <b-form-checkbox value="that">Check that out</b-form-checkbox>
-        </b-form-checkbox-group>
+      <b-form-group
+        id="input-group-2"
+        label="Your Name:"
+        label-for="input-password"
+      >
+        <b-form-input
+          id="input-password"
+          v-model="form.password"
+          required
+          type="password"
+          placeholder="Enter your password"
+        ></b-form-input>
       </b-form-group>
 
       <b-button type="submit" variant="primary">Submit</b-button>
@@ -44,44 +37,65 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "Formulario",
   data() {
     return {
       form: {
-        email: "",
-        name: "",
-        food: null,
-        checked: [],
+        user: "",
+        password: "",
+        // food: null,
+        // checked: [],
       },
-      foods: [
-        { text: "Select One", value: null },
-        "Carrots",
-        "Beans",
-        "Tomatoes",
-        "Corn",
-      ],
+      // foods: [
+      //   { text: "Select One", value: null },
+      //   "Carrots",
+      //   "Beans",
+      //   "Tomatoes",
+      //   "Corn",
+      // ],
       show: true,
     };
+  },
+  mounted() {
+    var session_url = "http://tracking:8888/wp-json/wp/v2/posts/1";
+    var username = "admin";
+    var password = "adminadmin";
+    var credentials = btoa(username + ":" + password);
+    var basicAuth = "Basic " + credentials;
+    axios
+      .post(
+        session_url,
+        {
+          title: "Oscar Pruebaaa",
+          content:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis alias qui illum labore laudantium, quasi excepturi numquam maxime consequatur. Odit officia corrupti quam velit? Aliquid labore pariatur suscipit ex obcaecati!",
+        },
+        {
+          headers: { Authorization: +basicAuth },
+          auth: {
+            username: username,
+            password: password,
+          },
+        }
+      )
+      .then(function(response) {
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   },
   methods: {
     onSubmit(evt) {
       evt.preventDefault();
-      alert(JSON.stringify(this.form));
+      // alert(JSON.stringify(this.form));
+      // conectarWp(this.form.user, this.form.password);
     },
-    // onReset(evt) {
-    //   evt.preventDefault();
-    //   // Reset our form values
-    //   this.form.email = "";
-    //   this.form.name = "";
-    //   this.form.food = null;
-    //   this.form.checked = [];
-    //   // Trick to reset/clear native browser form validation state
-    //   this.show = false;
-    //   this.$nextTick(() => {
-    //     this.show = true;
-    //   });
-    // },
   },
 };
+// const conectarWp = (username, password) => {
+
+// };
 </script>

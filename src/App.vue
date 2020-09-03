@@ -3,6 +3,11 @@
     <b-container class="bv-example-row">
       <b-row>
         <b-col>
+          <Data />
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col>
           <Formulario />
         </b-col>
       </b-row>
@@ -12,11 +17,13 @@
 
 <script>
 import Formulario from "./components/Formulario.vue";
+import Data from "./components/Data.vue";
 
 export default {
   name: "App",
   components: {
     Formulario,
+    Data,
   },
 };
 </script>
