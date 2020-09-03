@@ -1,24 +1,10 @@
 <template>
   <div>
-    <b-form
-      @submit="onSubmit"
-      v-if="show"
-      action="https://vuejs.org/"
-      method="post"
-    >
+    <b-form @submit="onSubmit" v-if="show" action="https://vuejs.org/" method="post">
       <b-form-group id="input-group-4" label="User:" label-for="input-user">
-        <b-form-input
-          id="input-user"
-          v-model="form.user"
-          required
-          placeholder="Enter user"
-        ></b-form-input>
+        <b-form-input id="input-user" v-model="form.user" required placeholder="Enter user"></b-form-input>
       </b-form-group>
-      <b-form-group
-        id="input-group-2"
-        label="Your Name:"
-        label-for="input-password"
-      >
+      <b-form-group id="input-group-2" label="Your Name:" label-for="input-password">
         <b-form-input
           id="input-password"
           v-model="form.password"
@@ -49,7 +35,30 @@ export default {
       show: true,
     };
   },
-  mounted() {},
+  mounted() {
+    axios
+      .post(
+        "http://tracking:8888/wp-json/wp/v2/users/register",
+        {
+          username: "Oscar Pruebaaa",
+          email: "ojcastaneda@gmail.com",
+          password: "123qwe",
+        },
+        {
+          // headers: { Authorization: +basicAuth },
+          // auth: {
+          //   username: username,
+          //   password: password,
+          // },
+        }
+      )
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  },
   methods: {
     onSubmit(evt) {
       evt.preventDefault();
@@ -80,10 +89,10 @@ const conectarWp = (username, password) => {
         },
       }
     )
-    .then(function(response) {
+    .then(function (response) {
       console.log(response);
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error);
     });
 };
