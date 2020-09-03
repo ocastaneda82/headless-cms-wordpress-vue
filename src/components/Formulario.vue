@@ -45,57 +45,46 @@ export default {
       form: {
         user: "",
         password: "",
-        // food: null,
-        // checked: [],
       },
-      // foods: [
-      //   { text: "Select One", value: null },
-      //   "Carrots",
-      //   "Beans",
-      //   "Tomatoes",
-      //   "Corn",
-      // ],
       show: true,
     };
   },
-  mounted() {
-    var session_url = "http://tracking:8888/wp-json/wp/v2/posts/1";
-    var username = "admin";
-    var password = "adminadmin";
-    var credentials = btoa(username + ":" + password);
-    var basicAuth = "Basic " + credentials;
-    axios
-      .post(
-        session_url,
-        {
-          title: "Oscar Pruebaaa",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis alias qui illum labore laudantium, quasi excepturi numquam maxime consequatur. Odit officia corrupti quam velit? Aliquid labore pariatur suscipit ex obcaecati!",
-        },
-        {
-          headers: { Authorization: +basicAuth },
-          auth: {
-            username: username,
-            password: password,
-          },
-        }
-      )
-      .then(function(response) {
-        console.log(response);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  },
+  mounted() {},
   methods: {
     onSubmit(evt) {
       evt.preventDefault();
       // alert(JSON.stringify(this.form));
-      // conectarWp(this.form.user, this.form.password);
+      conectarWp(this.form.user, this.form.password);
     },
   },
 };
-// const conectarWp = (username, password) => {
-
-// };
+const conectarWp = (username, password) => {
+  var session_url = "http://tracking:8888/wp-json/wp/v2/posts/1";
+  // var username = "admin";
+  // var password = "adminadmin";
+  var credentials = btoa(username + ":" + password);
+  var basicAuth = "Basic " + credentials;
+  axios
+    .post(
+      session_url,
+      {
+        title: "Oscar Pruebaaa",
+        content:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis alias qui illum labore laudantium, quasi excepturi numquam maxime consequatur. Odit officia corrupti quam velit? Aliquid labore pariatur suscipit ex obcaecati!",
+      },
+      {
+        headers: { Authorization: +basicAuth },
+        auth: {
+          username: username,
+          password: password,
+        },
+      }
+    )
+    .then(function(response) {
+      console.log(response);
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+};
 </script>
