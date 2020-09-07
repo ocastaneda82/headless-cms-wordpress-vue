@@ -4,3 +4,9 @@
     <p>Only logged in users are going to be able to see this page</p>
   </div>
 </template>
+
+<script>
+export default {
+  name: "Protected",
+};
+</script>

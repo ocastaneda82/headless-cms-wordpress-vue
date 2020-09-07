@@ -18,22 +18,27 @@ export default new Vuex.Store({
   },
   actions: {
     login({ commit }, credentials) {
-      return new Promise(async (resolve, reject) => {
-        try {
-          const { data } = await axios.post(
-            `http://directorio:8888/wp-json/jwt-auth/v1/token`,
-            credentials
-          );
-          commit("SET_USER", data);
-          resolve(data);
-        } catch (e) {
-          reject(e);
-        }
+      return new Promise((resolve, reject) => {
+        const { data } = axios
+          .post(`http://tracking:8888/wp-json/jwt-auth/v1/token`, credentials)
+          .then(commit("SET_USER", data))
+          .then((data) => resolve(data))
+          .catch((e) => reject(e));
+        // try {
+        //   const { data } = await axios.post(
+        //     `http://tracking:8888/wp-json/jwt-auth/v1/token`,
+        //     credentials
+        //   );
+        //   commit("SET_USER", data);
+        //   resolve(data);
+        // } catch (e) {
+        //   reject(e);
+        // }
       });
     },
     validate({ state }) {
       return axios({
-        url: `http://directorio:8888/wp-json/jwt-auth/v1/token/validate`,
+        url: `http://tracking:8888/wp-json/jwt-auth/v1/token/validate`,
         method: "post",
         headers: {
           Authorization: `Bearer ${state.user.token}`,
