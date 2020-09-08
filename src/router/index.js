@@ -46,13 +46,11 @@ router.beforeEach(async (to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     // this route requires auth, check if user is logged in
     // if not, redirect to login page.
-    console.log("hizo match");
     if (!store.state.user) {
       next({
         path: "/login",
         query: { redirect: to.fullPath },
       });
-      console.log("tiene que auntentificarse");
     } else {
       // we have a state.user object but
       // we need to check if the token is still valid

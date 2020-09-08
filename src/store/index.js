@@ -19,14 +19,23 @@ export default new Vuex.Store({
   actions: {
     login({ commit }, credentials) {
       return new Promise((resolve, reject) => {
+        // eslint-disable-next-line no-unused-vars
         const { data } = axios
-          .post(`http://tracking:8888/wp-json/jwt-auth/v1/token`, credentials)
-          .then(commit("SET_USER", data))
-          .then((data) => resolve(data))
+          .post(
+            `http://vue.digitalactive.info/wp-json/jwt-auth/v1/token`,
+            credentials
+          )
+          .then(function(response) {
+            const dataOscar = response;
+            console.log("Respuesta: " + JSON.stringify(dataOscar));
+            commit("SET_USER", response.data);
+            resolve(response.data);
+          })
           .catch((e) => reject(e));
+
         // try {
-        //   const { data } = await axios.post(
-        //     `http://tracking:8888/wp-json/jwt-auth/v1/token`,
+        //   const { data } = axios.post(
+        //     `http://vue.digitalactive.info/wp-json/jwt-auth/v1/token`,
         //     credentials
         //   );
         //   commit("SET_USER", data);
@@ -38,7 +47,7 @@ export default new Vuex.Store({
     },
     validate({ state }) {
       return axios({
-        url: `http://tracking:8888/wp-json/jwt-auth/v1/token/validate`,
+        url: `http://vue.digitalactive.info/wp-json/jwt-auth/v1/token/validate`,
         method: "post",
         headers: {
           Authorization: `Bearer ${state.user.token}`,
