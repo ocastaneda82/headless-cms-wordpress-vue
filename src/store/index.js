@@ -26,23 +26,12 @@ export default new Vuex.Store({
             credentials
           )
           .then(function(response) {
-            const dataOscar = response;
-            console.log("Respuesta: " + JSON.stringify(dataOscar));
+            // const dataOscar = response;
+            // console.log("Respuesta: " + JSON.stringify(dataOscar));
             commit("SET_USER", response.data);
             resolve(response.data);
           })
           .catch((e) => reject(e));
-
-        // try {
-        //   const { data } = axios.post(
-        //     `http://vue.digitalactive.info/wp-json/jwt-auth/v1/token`,
-        //     credentials
-        //   );
-        //   commit("SET_USER", data);
-        //   resolve(data);
-        // } catch (e) {
-        //   reject(e);
-        // }
       });
     },
     validate({ state }) {
@@ -53,6 +42,9 @@ export default new Vuex.Store({
           Authorization: `Bearer ${state.user.token}`,
         },
       });
+    },
+    information() {
+      return "Hola";
     },
   },
   modules: {},

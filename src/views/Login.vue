@@ -1,26 +1,24 @@
 <template>
-  <div class="login">
-    <div class="container mx-auto px-4">
-      <div class="flex -mx-4">
-        <div class="w-full">
-          <h1>Use this page to login</h1>
-        </div>
-      </div>
-      <div class="flex -mx-4">
-        <div class="w-full">
-          <LoginForm />
-        </div>
-      </div>
-    </div>
+  <div class="login b-page-cont">
+    <b-container>
+      <b-row>
+        <b-col><h1>Login</h1></b-col>
+      </b-row>
+      <b-row>
+        <b-col><LoginForm /></b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
 <script>
+// import LoginForm from "@/components/LoginForm";
 import LoginForm from "@/components/LoginForm";
 export default {
   name: "Login",
   components: {
     LoginForm,
+    // LoginForm,
   },
 };
 </script>
