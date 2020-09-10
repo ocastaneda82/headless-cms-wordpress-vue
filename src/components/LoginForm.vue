@@ -46,6 +46,7 @@ export default {
       try {
         // eslint-disable-next-line no-unused-vars
         const { result } = await this.$store.dispatch("login", this.form);
+        console.log("Respuesta desde: " + JSON.stringify(result));
         const { redirect = false } = this.$route.query;
         const path = redirect ? decodeURI(redirect) : "/";
         this.$router.push({ path });
