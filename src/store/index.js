@@ -7,13 +7,20 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     user: null,
+    id: null,
   },
   mutations: {
     SET_USER(state, user) {
       state.user = user;
     },
+    SET_ID(state, id) {
+      state.id = id;
+    },
     DELETE_USER(state) {
       state.user = null;
+    },
+    DELETE_ID(state) {
+      state.id = null;
     },
   },
   actions: {
@@ -59,9 +66,6 @@ export default new Vuex.Store({
           });
       });
     },
-    // information() {
-    //   return "Hola";
-    // },
   },
   modules: {},
 });

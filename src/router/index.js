@@ -35,6 +35,14 @@ const routes = [
       requiresAuth: true,
     },
   },
+  {
+    path: "/edit",
+    name: "Edit",
+    component: () => import(/* webpackChunkName: "edit" */ "../views/Edit.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
 ];
 
 const router = new VueRouter({
@@ -64,6 +72,7 @@ router.beforeEach(async (to, from, next) => {
         // the token is invalid so we will have the user login again
         // clear the token and user info
         store.commit("DELETE_USER");
+        store.commit("DELETE_ID");
         next({
           path: "/login",
           query: { redirect: to.fullPath },

@@ -10,7 +10,7 @@
     >
       <b-card-text>{{item.description}}</b-card-text>
 
-      <b-button :href="item.url" variant="primary">{{item.url}}</b-button>
+      <b-button target="_blank" :href="item.url" variant="primary">{{item.url}}</b-button>
     </b-card>
   </b-card-group>
   <!-- <pre>{{info}}</pre> -->
