@@ -26,11 +26,11 @@ export default new Vuex.Store({
             credentials
           )
           .then(function(response) {
-            const dataOscar = response;
-            console.log("Respuesta: " + JSON.stringify(dataOscar.data));
-            console.log("Nombre: " + dataOscar.data.user_display_name);
-            console.log("Correo: " + dataOscar.data.user_email);
-            console.log("Token: " + dataOscar.data.token);
+            // const dataOscar = response;
+            // console.log("Respuesta: " + JSON.stringify(dataOscar.data));
+            // console.log("Nombre: " + dataOscar.data.user_display_name);
+            // console.log("Correo: " + dataOscar.data.user_email);
+            // console.log("Token: " + dataOscar.data.token);
             commit("SET_USER", response.data);
             resolve(response.data);
           })
@@ -39,7 +39,7 @@ export default new Vuex.Store({
     },
     // eslint-disable-next-line no-unused-vars
     validate({ state }) {
-      console.log("info: " + state.user.token);
+      // console.log("info: " + state.user.token);
       return new Promise((resolve, reject) => {
         axios
           .post(

@@ -25,7 +25,7 @@
     </b-form>
     <!-- <b-card class="mt-3" header="Form Data Result">
       <pre class="m-0">{{ form }}</pre>
-    </b-card> -->
+    </b-card>-->
   </div>
 </template>
 
@@ -46,7 +46,7 @@ export default {
       try {
         // eslint-disable-next-line no-unused-vars
         const { result } = await this.$store.dispatch("login", this.form);
-        console.log("Respuesta desde: " + JSON.stringify(result));
+        // console.log("Respuesta desde: " + JSON.stringify(result));
         const { redirect = false } = this.$route.query;
         const path = redirect ? decodeURI(redirect) : "/";
         this.$router.push({ path });
