@@ -1,19 +1,19 @@
 <template>
-  <div>
+  <b-card-group deck>
     <b-card
-      title="Card Title"
+      v-for="(item, i) in info"
+      :key="i"
+      :title="item.name"
       img-src="https://picsum.photos/600/300/?image=25"
       img-alt="Image"
       img-top
-      tag="article"
-      style="max-width: 20rem;"
-      class="mb-2"
     >
-      <b-card-text>{{ info.content.rendered }}</b-card-text>
+      <b-card-text>{{item.description}}</b-card-text>
 
-      <b-button href="#" variant="primary">Go somewhere</b-button>
+      <b-button :href="item.url" variant="primary">{{item.url}}</b-button>
     </b-card>
-  </div>
+  </b-card-group>
+  <!-- <pre>{{info}}</pre> -->
 </template>
 
 <script>
@@ -22,12 +22,17 @@ export default {
   name: "Data",
   data() {
     return {
-      info: null,
+      info: {
+        // le paso algo al iniciar para evitar el error
+        name: "Tu nombre",
+        description: "Tu descripción",
+        url: "Tu sitio web",
+      },
     };
   },
   mounted() {
     axios
-      .get("http://tracking:8888/wp-json/wp/v2/posts/9")
+      .get("https://vuejs.digitalactive.info/wp-json/wp/v2/users")
       .then((response) => (this.info = response.data));
   },
 };
