@@ -79,6 +79,54 @@ export default new Vuex.Store({
           .catch((e) => reject(e));
       });
     },
+
+    // eslint-disable-next-line no-unused-vars
+    editarDataUsuario({ commit }, { name, url, description }) {
+      const token = this.state.user.token;
+      const id = this.state.id;
+      // revisar si traen datos del form o si no dejarles lo que ya está en el store
+      const uName = name ? name : this.state.name;
+      const uUrl = url ? url : this.state.url;
+      const uDescription = description ? description : this.state.description;
+      // console.log(name, uName);
+      // console.log(url, uUrl);
+      // console.log(description, uDescription);
+
+      return new Promise((resolve, reject) => {
+        axios
+          .post(
+            "https://vuejs.digitalactive.info/wp-json/wp/v2/users/" + id,
+            {
+              name: uName,
+              url: uUrl,
+              description: uDescription,
+            },
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          )
+          .then((response) => {
+            const id = this.state.id;
+            const name = uName;
+            const description = uDescription;
+            const url = uUrl;
+
+            console.log(id, name, description, url);
+
+            commit("SET_DATA_USER", {
+              id,
+              name,
+              description,
+              url,
+            });
+            resolve(response.data);
+          })
+          // .then((response) => resolve(response.data))
+
+          .catch((e) => reject(e));
+      });
+    },
+
     // eslint-disable-next-line no-unused-vars
     validate({ state }) {
       // console.log("info: " + state.user.token);

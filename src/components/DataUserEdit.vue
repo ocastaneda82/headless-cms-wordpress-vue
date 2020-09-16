@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-form @submit="onSubmit" v-if="show">
+    <b-form @submit.prevent="editar()" v-if="show">
       <b-form-group id="input-group-1" label="Nombre de usuario:" label-for="nombre">
         <b-form-input id="nombre" v-model="form.name" type="text" placeholder="Nombre de usuario"></b-form-input>
       </b-form-group>
@@ -28,8 +28,8 @@
 </template>
 
 <script>
-import store from "../store";
-import axios from "axios";
+// import store from "../store";
+// import axios from "axios";
 
 // console.log(id, token);
 
@@ -45,33 +45,19 @@ export default {
     };
   },
   methods: {
-    onSubmit(evt) {
-      evt.preventDefault();
-      const token = store.state.user.token;
-      const id = store.state.id;
-      // revisar si traen datos del form o si no dejarles lo que ya está en el store
-      const name = this.form.name ? this.form.name : store.state.name;
-      const url = this.form.url ? this.form.url : store.state.url;
-      const description = this.form.description
-        ? this.form.description
-        : store.state.description;
-
-      axios
-        .post(
-          "https://vuejs.digitalactive.info/wp-json/wp/v2/users/" + id,
-          {
-            name: name,
-            url: url,
-            description: description,
-          },
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        )
-        .then(() => this.$router.push("/user"))
-        .catch(function (error) {
-          console.log(error);
-        });
+    async editar() {
+      try {
+        console.log(this.form);
+        // eslint-disable-next-line no-unused-vars
+        const { result } = await this.$store.dispatch(
+          "editarDataUsuario",
+          this.form
+        );
+        this.$router.push("/user");
+      } catch (e) {
+        console.log("Error:");
+        console.log(e);
+      }
     },
   },
 };
