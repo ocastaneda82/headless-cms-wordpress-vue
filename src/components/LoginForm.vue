@@ -44,9 +44,15 @@ export default {
     async login() {
       // login() {
       try {
+        // envio los datos del form y espero una respuesta
         // eslint-disable-next-line no-unused-vars
         const { result } = await this.$store.dispatch("login", this.form);
-        // console.log("Respuesta desde: " + JSON.stringify(result));
+        // ahora monto los datos del usuario en el store y espero una respuesta
+        // eslint-disable-next-line no-unused-vars
+        const { resultMontar } = await this.$store.dispatch(
+          "montarDataUsuario"
+        );
+        // ahora sigo con lo demás
         const { redirect = false } = this.$route.query;
         const path = redirect ? decodeURI(redirect) : "/";
         this.$router.push({ path });

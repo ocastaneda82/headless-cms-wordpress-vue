@@ -49,13 +49,20 @@ export default {
       evt.preventDefault();
       const token = store.state.user.token;
       const id = store.state.id;
+      // revisar si traen datos del form o si no dejarles lo que ya está en el store
+      const name = this.form.name ? this.form.name : store.state.name;
+      const url = this.form.url ? this.form.url : store.state.url;
+      const description = this.form.description
+        ? this.form.description
+        : store.state.description;
+
       axios
         .post(
           "https://vuejs.digitalactive.info/wp-json/wp/v2/users/" + id,
           {
-            name: this.form.name,
-            url: this.form.url,
-            description: this.form.description,
+            name: name,
+            url: url,
+            description: description,
           },
           {
             headers: { Authorization: `Bearer ${token}` },

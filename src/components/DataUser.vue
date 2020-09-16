@@ -1,7 +1,7 @@
 <template>
   <div class="data-user">
     <h1>Hola, {{info.name}}</h1>
-    <h2>Tu correo es: {{usuario.email}}</h2>
+    <h2>Tu correo es: {{info.email}}</h2>
     <h2>
       Tu sitio web es:
       <a :href="info.url" target="_blank">{{ info.url }}</a>
@@ -19,11 +19,8 @@
 
 <script>
 import store from "../store";
-import axios from "axios";
+// import axios from "axios";
 // import DataUserEdit from "@/components/DataUserEdit";
-
-const email = store.state.user.user_email;
-const usuarioNice = store.state.user.user_nicename;
 
 export default {
   // components: {
@@ -31,11 +28,9 @@ export default {
   // },
   data() {
     return {
-      usuario: {
-        email: email,
-      },
       info: {
         // le paso algo al iniciar para evitar el error
+        email: "",
         name: "",
         description: "",
         url: "",
@@ -44,23 +39,16 @@ export default {
     };
   },
   mounted() {
-    axios
-      .get(
-        "https://vuejs.digitalactive.info/wp-json/wp/v2/users/?slug=" +
-          usuarioNice
-      )
-      .then((response) => {
-        store.commit("SET_ID", response.data[0].id);
-        this.info = response.data[0];
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    this.info.email = store.state.user.user_email;
+    this.info.name = store.state.name;
+    this.info.description = store.state.description;
+    this.info.url = store.state.url;
+    this.info.id = store.state.id;
   },
   methods: {
     unLogin() {
-      store.commit("DELETE_USER");
-      store.commit("DELETE_ID");
+      // store.commit("DELETE_USER");
+      store.commit("DELETE_DATA_USER", null);
       this.$router.push("/login");
     },
     editInfo() {

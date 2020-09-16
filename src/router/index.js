@@ -71,8 +71,8 @@ router.beforeEach(async (to, from, next) => {
       } catch (e) {
         // the token is invalid so we will have the user login again
         // clear the token and user info
-        store.commit("DELETE_USER");
-        store.commit("DELETE_ID");
+        // store.commit("DELETE_USER");
+        store.commit("DELETE_DATA_USER");
         next({
           path: "/login",
           query: { redirect: to.fullPath },

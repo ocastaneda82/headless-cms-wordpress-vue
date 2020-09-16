@@ -8,19 +8,29 @@ export default new Vuex.Store({
   state: {
     user: null,
     id: null,
+    name: null,
+    description: null,
+    url: null,
   },
   mutations: {
     SET_USER(state, user) {
       state.user = user;
     },
-    SET_ID(state, id) {
+    SET_DATA_USER(state, { id, name, description, url }) {
       state.id = id;
+      state.name = name;
+      state.description = description;
+      state.url = url;
     },
     DELETE_USER(state) {
       state.user = null;
     },
-    DELETE_ID(state) {
+    DELETE_DATA_USER(state) {
+      state.user = null;
       state.id = null;
+      state.name = null;
+      state.description = null;
+      state.url = null;
     },
   },
   actions: {
@@ -33,12 +43,37 @@ export default new Vuex.Store({
             credentials
           )
           .then(function(response) {
-            // const dataOscar = response;
-            // console.log("Respuesta: " + JSON.stringify(dataOscar.data));
-            // console.log("Nombre: " + dataOscar.data.user_display_name);
-            // console.log("Correo: " + dataOscar.data.user_email);
-            // console.log("Token: " + dataOscar.data.token);
             commit("SET_USER", response.data);
+            // dataWP(response.data.user_nicename);
+            resolve(response.data.user_nicename);
+            // resolve(response.data);
+          })
+          .catch((e) => reject(e));
+      });
+    },
+
+    // guardo los datos del usuario en el store
+    montarDataUsuario({ commit }) {
+      const usuarioNice = this.state.user.user_nicename;
+      return new Promise((resolve, reject) => {
+        // eslint-disable-next-line no-unused-vars
+        const { data } = axios
+          .get(
+            "https://vuejs.digitalactive.info/wp-json/wp/v2/users/?slug=" +
+              usuarioNice
+          )
+          .then((response) => {
+            const id = response.data[0].id;
+            const name = response.data[0].name;
+            const description = response.data[0].description;
+            const url = response.data[0].url;
+
+            commit("SET_DATA_USER", {
+              id,
+              name,
+              description,
+              url,
+            });
             resolve(response.data);
           })
           .catch((e) => reject(e));
