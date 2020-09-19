@@ -1,5 +1,5 @@
 <template>
-  <b-card-group deck>
+  <b-card-group columns>
     <b-card
       v-for="(item, i) in info"
       :key="i"
